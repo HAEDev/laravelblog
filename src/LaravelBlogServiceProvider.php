@@ -32,9 +32,6 @@ class LaravelBlogServiceProvider extends ServiceProvider
         // Load package migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        // Load package views
-        $this->loadViewsFrom(__DIR__.'/Views', 'laravel-blog');
-
         // Publish config files
         $this->publishes([
             __DIR__.'/../config/laravel-blog.php' => config_path('laravel-blog.php'),
@@ -44,6 +41,14 @@ class LaravelBlogServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../database/migrations' => app_path('database/migrations'),
         ], 'laravel-blog/migrations');
+
+        // Load package views
+        $this->loadViewsFrom(__DIR__.'/Views', 'laravel-blog');
+
+        // Publish view files
+        $this->publishes([
+            __DIR__.'/Views' => resource_path('views/vendor/laravel-blog'),
+        ], 'laravel-blog/views');
 
         // Publish the public CSS and JS
         $this->publishes([

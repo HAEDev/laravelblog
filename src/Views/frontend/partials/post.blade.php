@@ -23,7 +23,7 @@
             </div>
         </header>
 
-        <p>{{ $post->getBriefContent() }}</p>
+        <p>@if($post->isWithinDays(3)) <strong>New - </strong> @endif {{ $post->getBriefContent() }}</p>
 
         <div class="text-right">
             <a href="{{ $post->url }}">Read More</a>

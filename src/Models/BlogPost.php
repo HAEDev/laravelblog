@@ -107,6 +107,16 @@ class BlogPost extends BlogModel
     }
 
     /**
+     * Retrieves all views.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function views()
+    {
+        return $this->hasMany(BlogPostView::class);
+    }
+
+    /**
      * Returns an array of available statuses a BlogPost can be in.
      *
      * @return array
@@ -286,5 +296,22 @@ class BlogPost extends BlogModel
     public function isActive()
     {
         return $this->status == self::STATUS_ACTIVE;
+    }
+
+    /**
+     * Records a user reading this post.
+     *
+     * @return bool
+     */
+    public function recordView()
+    {
+        if (auth()->check()) {
+            $this->views()->updateOrCreate([
+                'blog_post_id' => $this->id,
+                'user_id' => auth()->id(),
+            ]);
+        }
+
+        return true;
     }
 }

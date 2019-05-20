@@ -54,6 +54,9 @@ class BlogController extends Controller
                 ."$post->id/$post->slug", 301);
         }
 
+        // Record the view
+        $post->recordView();
+
         return view($this->viewPath."frontend.show", [
             'post' => $post,
             'replyTo' => $replyTo,

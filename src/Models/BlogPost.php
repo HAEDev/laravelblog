@@ -113,7 +113,7 @@ class BlogPost extends BlogModel
      */
     public function views()
     {
-        return $this->hasMany(BlogPostView::class);
+        return $this->hasMany(BlogPostView::class, "blog_post_id", "id");
     }
 
     /**

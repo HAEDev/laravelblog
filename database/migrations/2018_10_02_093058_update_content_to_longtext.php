@@ -13,7 +13,9 @@ class UpdateContentToLongtext extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE blog_posts MODIFY content LONGTEXT;');
+        DB::table("blog_posts", function (Blueprint $table) {
+            $table->longText("content")->default("")->change();
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class UpdateContentToLongtext extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE blog_posts MODIFY content TEXT;');
+        DB::table("blog_posts", function (Blueprint $table) {
+            $table->longText("text")->default("")->change();
+        });
     }
 }

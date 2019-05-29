@@ -13,7 +13,7 @@ class AddFbSlugToBlogPostsTable extends Migration
     public function up()
     {
         Schema::table("blog_posts", function (Blueprint $table) {
-            $table->string("fb_slug")->after("slug");
+            $table->string("fb_slug")->default("")->after("slug");
         });
     }
 

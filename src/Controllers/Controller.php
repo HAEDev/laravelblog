@@ -8,6 +8,7 @@ class Controller extends BaseController
 {
     protected $viewPath;
     protected $routePrefix;
+    protected $postModel;
 
     public function __construct()
     {
@@ -20,5 +21,8 @@ class Controller extends BaseController
         if ($this->routePrefix && substr($this->routePrefix, -1) !== "/") {
             $this->routePrefix .= "/";
         }
+
+        $model = config('laravel-blog.post_model', BlogPost::class);
+        $this->postModel = new $model;
     }
 }

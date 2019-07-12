@@ -31,8 +31,10 @@ class BlogController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function show(BlogPost $post, $slug)
+    public function show($post, $slug)
     {
+        $post = $this->postModel->findOrFail($post);
+
         // Add check for draft posts
         $user = auth()->user();
         if($post->status == BlogPost::STATUS_DRAFT && config("laravel-blog.allow_post_previewing", true)) {
@@ -63,8 +65,10 @@ class BlogController extends Controller
         ]);
     }
 
-    public function postComment(BlogPost $post, Request $request)
+    public function postComment($post, Request $request)
     {
+        $post = $this->postModel->findOrFail($post);
+
         $this->validate($request, [
             'name' => 'sometimes|string|max:200',
             'email' => 'sometimes|email|max:150',

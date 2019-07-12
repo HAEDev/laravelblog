@@ -30,12 +30,11 @@ class BlogPostController extends Controller
             abort(403);
         }
 
-        $posts = BlogPost::orderBy("is_featured", "desc")
+        $posts = $this->postModel->orderBy("is_featured", "desc")
             ->orderBy("published_at", "desc");
 
         // Separate scheduled if necessary
-        if (config("laravel-blog.posts.separate_scheduled", false) === true)
-        {
+        if (config("laravel-blog.posts.separate_scheduled", false) === true) {
             $posts = $posts->whereRaw("TIMESTAMP(published_at) < NOW()");
         }
 
@@ -57,7 +56,7 @@ class BlogPostController extends Controller
             abort(403);
         }
 
-        $posts = BlogPost::whereRaw("TIMESTAMP(published_at) > NOW()")
+        $posts = $this->postModel->whereRaw("TIMESTAMP(published_at) > NOW()")
             ->orderBy("published_at", "asc")
             ->paginate(15);
 
@@ -94,16 +93,12 @@ class BlogPostController extends Controller
 
         $siteId = getBlogSiteID();
 
-        $published_at = $request->published_at
-            ? date("Y-m-d H:i:s", strtotime($request->published_at))
-            : date("Y-m-d H:i:s", time() - 60);
-
-        $slug = $request->slug
-            ? BlogPost::processSlug($request->slug)
-            : BlogPost::processSlug($request->title);
+        $published_at = date("Y-m-d H:i:s",
+            $request->published_at ? strtotime($request->published_at) : time() - 60);
+        $slug = $this->postModel->processSlug($request->slug ?: $request->title);
 
         // Create post
-        $post = BlogPost::create([
+        $post = $this->postModel->create([
             'site_id' => $siteId,
             'author_id' => auth()->user() ? auth()->user()->id : null,
             'blog_image_id' => $request->blog_image_id,
@@ -145,8 +140,10 @@ class BlogPostController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function show(BlogPost $post)
+    public function show($post)
     {
+        $post = $this->postModel->findOrFail($post);
+
         if(auth()->user()->cannot("view", $post)) {
             abort(403);
         }
@@ -163,8 +160,10 @@ class BlogPostController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function edit(BlogPost $post)
+    public function edit($post)
     {
+        $post = $this->postModel->findOrFail($post);
+
         if(auth()->user()->cannot("edit", $post)) {
             abort(403);
         }
@@ -177,13 +176,15 @@ class BlogPostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param BlogPost                  $post
+     * @param BlogPostRequest $request
+     * @param BlogPost        $post
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function update(BlogPostRequest $request, BlogPost $post)
+    public function update(BlogPostRequest $request, $post)
     {
+        $post = $this->postModel->findOrFail($post);
+
         if(auth()->user()->cannot("edit", $post)) {
             abort(403);
         }
@@ -244,10 +245,13 @@ class BlogPostController extends Controller
      *
      * @param BlogPost $post
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      * @internal param int $id
      */
-    public function destroy(BlogPost $post)
+    public function destroy($post)
     {
+        $post = $this->postModel->findOrFail($post);
+
         if(auth()->user()->cannot("delete", $post)) {
             abort(403);
         }

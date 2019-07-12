@@ -3,6 +3,7 @@
 namespace Lnch\LaravelBlog\Controllers;
 
 use App\Http\Controllers\Controller as BaseController;
+use Lnch\LaravelBlog\Models\BlogPost;
 
 class Controller extends BaseController
 {

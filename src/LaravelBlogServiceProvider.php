@@ -37,9 +37,9 @@ class LaravelBlogServiceProvider extends ServiceProvider
             __DIR__.'/../config/laravel-blog.php' => config_path('laravel-blog.php'),
         ], 'laravel-blog/config');
 
-        // Publish config files
+        // Publish migration files
         $this->publishes([
-            __DIR__.'/../database/migrations' => app_path('database/migrations'),
+            __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'laravel-blog/migrations');
 
         // Load package views

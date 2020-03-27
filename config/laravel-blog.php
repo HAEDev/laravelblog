@@ -178,6 +178,15 @@ return [
         ],
 
         /*
+         *  By default, the editor will be initialised automatically. If it needs to be initialised elsewhere,
+         *  due to vue for example, set to false.
+         *
+         * Editor can be initialised in a view with {!! LaravelBlog::initCKEditor() !!}
+         */
+
+        'init_editor' => true,
+
+        /*
          * By default all posts, scheduled or current will be shown together.
          */
         'separate_scheduled' => false

@@ -129,8 +129,13 @@ class BlogPostController extends Controller
         event(new BlogPostCreated($post));
 
         // Return
-        return redirect($this->routePrefix."posts")
-            ->with("success", "Blog post created successfully");
+        if($post->status == BlogPost::STATUS_DRAFT) {
+            return redirect($this->routePrefix."posts/".$post->id."/edit")
+                ->with("success", "Blog post created successfully");
+        } else {
+            return redirect($this->routePrefix."posts/index")
+                ->with("success", "Blog post created successfully");
+        }
     }
 
     /**

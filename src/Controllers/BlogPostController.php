@@ -133,7 +133,7 @@ class BlogPostController extends Controller
             return redirect($this->routePrefix."posts/".$post->id."/edit")
                 ->with("success", "Blog post created successfully");
         } else {
-            return redirect($this->routePrefix."posts/index")
+            return redirect($this->routePrefix."posts")
                 ->with("success", "Blog post created successfully");
         }
     }
@@ -245,7 +245,7 @@ class BlogPostController extends Controller
             return redirect($this->routePrefix."posts/".$post->id."/edit")
                 ->with("success", "Blog post updated successfully");
         } else {
-            return redirect($this->routePrefix."posts/index")
+            return redirect($this->routePrefix."posts")
                 ->with("success", "Blog post updated successfully");
         }
     }

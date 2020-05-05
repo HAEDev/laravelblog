@@ -49,6 +49,16 @@ Route::group(['prefix' => config("laravel-blog.route_prefix"), 'middleware' => '
         );
     }
 
+    if (config("laravel-blog.files.enabled"))
+    {
+        Route::resource(config("laravel-blog.files.taxonomy"),
+            "Lnch\LaravelBlog\Controllers\BlogImageController",
+            [
+                'except' => ['show', 'edit', 'update']
+            ]
+        );
+    }
+
     if (config("laravel-blog.comments.enabled"))
     {
         Route::resource(config("laravel-blog.comments.taxonomy"),

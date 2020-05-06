@@ -67,8 +67,10 @@ class BlogFileController extends Controller
             abort(403);
         }
 
+//        dd($request->file('files'));
+
         // Upload files, create records
-        foreach($request->files as $file)
+        foreach($request->file('files') as $file)
         {
             DB::transaction(function() use($file, $request) {
                 $this->uploadFile($file, $request);
@@ -138,18 +140,12 @@ class BlogFileController extends Controller
         $filenamePattern = config("laravel-blog.files.filename_format", "[datetime]_[filename]");
         $filename = preg_replace($patterns, $matches, $filenamePattern);
 
-        $caption = $request->caption ? $request->caption[$originalFilename] : '';
-        $alt_text = $request->alt_text ? $request->alt_text[$originalFilename] : '';
-
         $storageLocation = config("laravel-blog.files.storage_location");
 
         // Create DB record
         BlogFile::create([
             'site_id' => getBlogSiteID(),
-            'storage_location' => $storageLocation,
-            'path' => $filename,
-            'caption' => $caption,
-            'alt_text' => $alt_text,
+            'path' => $filename
         ]);
 
         // Upload file
@@ -169,68 +165,5 @@ class BlogFileController extends Controller
         $file->move($destinationPath, $filename);
 
         return $filename;
-    }
-
-    /**
-     * Retrieves a request to upload an file from the CKEditor
-     *
-     * @param Request $request
-     * @return string
-     * @throws \Exception
-     */
-    public function dialogUpload(Request $request)
-    {
-        $files = request()->file('upload');
-        $error_bag = [];
-        foreach (is_array($files) ? $files : [$files] as $file)
-        {
-            $new_filename = $this->uploadFile($file, $request);
-        }
-
-        $response = $this->useFile($new_filename);
-
-        return $response;
-    }
-
-    /**
-     * Automatically populates the URL field on CKEditor after
-     * a successful upload.
-     *
-     * @param $new_filename
-     * @return string
-     * @throws \Exception
-     */
-    private function useFile($new_filename)
-    {
-        if(config("laravel-blog.files.storage_location") == "storage")
-        {
-            $file = url("storage/".config("laravel-blog.files.storage_path")."/".$new_filename);
-        }
-        else if(config("laravel-blog.files.storage_location") == "public")
-        {
-            $file = url(config("laravel-blog.files.storage_path")."/".$new_filename);
-        }
-        else
-        {
-            throw new \Exception("files.storage_path has not been properly defined");
-        }
-
-        return "<script type='text/javascript'>
-
-        function getUrlParam(paramName) {
-            var reParam = new RegExp('(?:[\?&]|&)' + paramName + '=([^&]+)', 'i');
-            var match = window.location.search.match(reParam);
-            return ( match && match.length > 1 ) ? match[1] : null;
-        }
-
-        var funcNum = getUrlParam('CKEditorFuncNum');
-
-        var par = window.parent,
-            op = window.opener,
-            o = (par && par.CKEDITOR) ? par : ((op && op.CKEDITOR) ? op : false);
-
-        if (op) window.close();
-        if (o !== false) o.CKEDITOR.tools.callFunction(funcNum, '$file');
-        </script>";
     }
 }

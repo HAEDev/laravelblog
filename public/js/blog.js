@@ -27,11 +27,11 @@ $(function() {
     var pendingImagesContainer = $(".pending-images");
 
     $("#images-upload").on("change", function() {
-        previewFiles();
+        previewImageFiles();
     });
 
     // Allows image files to be previewed
-    function previewFiles() {
+    function previewImageFiles() {
         pendingImagesContainer.empty();
         var files   = document.querySelector('#images-upload').files;
         var count   = 0;
@@ -63,6 +63,46 @@ $(function() {
                         "                </div>\n" +
                         "               </div>";
                     pendingImagesContainer.append( template );
+                    count++;
+                }, false);
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+    }
+
+    var pendingFilesContainer = $(".pending-files");
+
+    $("#files-upload").on("change", function() {
+        previewFiles();
+    });
+
+    function previewFiles() {
+        pendingFilesContainer.empty();
+        var files   = document.querySelector('#files-upload').files;
+        var count   = 0;
+
+        function readAndPreview(file) {
+            console.log(file);
+            if ( /\.(xls?x|doc?x|pdf)$/i.test(file.name) ) {
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var template = "<div class='col-sm-6'>\n" +
+                        "               <div class='pending'>\n" +
+                        "                    <div class='pending-file text-center'>\n" +
+                        "                        "+file.name+"\n" +
+                        "                    </div>\n" +
+                        "                    <div class='text-right'>" +
+                        "                       <button class='btn btn-sm btn-danger remove-image'>Remove</button>" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "               </div>";
+                    pendingFilesContainer.append( template );
                     count++;
                 }, false);
 

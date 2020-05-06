@@ -13,5 +13,5 @@ class BlogFile extends BlogModel
         'path'
     ];
 
-    public $table = "blog_post_files";
+    public $table = "blog_files";
 }

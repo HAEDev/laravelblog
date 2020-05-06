@@ -33,6 +33,19 @@
             --}}</textarea>
         </div>
 
+        @if(config("laravel-blog.files.enabled"))
+        <div class="form-group">
+            <div class="laravel-blog-sidebar-block">
+                <div class="title">Attached Files</div>
+                <div class="content">
+                    <button type="button" class="btn btn-sm btn-block btn-primary" data-toggle="modal"
+                            data-target="#attached-files">Upload Files</button>
+                    test
+                </div>
+            </div>
+        </div>
+        @endif
+
     </div> <!-- End .col-sm-9 -->
 
     <div class="col-sm-3">
@@ -172,6 +185,20 @@
         <div class="modal-content">
             <div class="modal-body">
                 <iframe src="{{ blogUrl("images?laravel-blog-embed=true&laravel-blog-featured=true") }}" frameborder="0"
+                        style="width: 100%; height: 500px;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="attached-files" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe src="{{ blogUrl("files?laravel-blog-embed=true&laravel-blog-featured=true") }}" frameborder="0"
                         style="width: 100%; height: 500px;"></iframe>
             </div>
             <div class="modal-footer">

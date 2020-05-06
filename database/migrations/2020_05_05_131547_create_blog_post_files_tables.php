@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBlogPostFilesTable extends Migration
+class CreateBlogPostFilesTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,19 @@ class CreateBlogPostFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('blog_post_files', function (Blueprint $table) {
+        Schema::create('blog_files', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger("site_id")->nullable();
-            $table->unsignedInteger('post_id');
+            $table->unsignedInteger('site_id')->nullable();
             $table->string('path');
+            $table->softDeletes();
             $table->timestamps();
+        });
 
-            $table->foreign("blog_post_id")
-                ->references("id")
-                ->on("blog_posts");
+        Schema::create('blog_post_files', function(Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('post_id');
+            $table->unsignedInteger('file_id');
+            $table->timestamps();
         });
     }
 
@@ -34,5 +37,6 @@ class CreateBlogPostFilesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('blog_post_files');
+        Schema::dropIfExists('blog_files');
     }
 }

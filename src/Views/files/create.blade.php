@@ -24,16 +24,19 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="drag-upload">
-                                <label for="images-upload">
+                                <label for="files-upload">
                                     <span class="no-drag">Select Files</span>
                                     <span class="drag">Click here, or drag files here to upload</span>
                                 </label>
-                                <input type="file" class="form-control" name="images[]" id="images-upload"
+                                <input type="file" class="form-control" name="files[]" id="files-upload"
                                        multiple accept=".xlsx,.pdf,.docx,.doc" required />
                             </div>
                         </div>
                     </div> <!-- End .col-sm-6 -->
                 </div> <!-- End .row -->
+
+                <h4>Selected Files</h4>
+                <div class="row pending-files"></div>
 
                 <div class="text-right">
                     <button class="btn btn-success">Upload</button>

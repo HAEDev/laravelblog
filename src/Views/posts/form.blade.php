@@ -40,7 +40,19 @@
                 <div class="content">
                     <button type="button" class="btn btn-sm btn-block btn-primary" data-toggle="modal"
                             data-target="#attached-files">Upload Files</button>
-                    test
+                    <table class="table table-striped" id="files-table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div id="selected-files">
                 </div>
             </div>
         </div>

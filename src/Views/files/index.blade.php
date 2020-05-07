@@ -45,8 +45,8 @@
                         <td>
                             @if(Request::get("laravel-blog-embed", false))
                             <div class="actions text-center">
-                                <button class="btn btn-xs btn-primary ck-select-file" data-id="{{ $file->id }}"
-                                        data-url="{{ $file->getUrl() }}" data-alt-text="{{ $file->alt_text }}">
+                                <button class="btn btn-xs btn-primary select-file" data-id="{{ $file->id }}"
+                                        data-url="{{ $file->getUrl() }}" data-name="{{ $file->path }}">
                                     Select
                                 </button>
                             </div> <!-- End .actions.text-center -->

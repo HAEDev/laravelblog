@@ -139,7 +139,7 @@ $(function() {
         var copyText = $(this).parent().find("input");
         copyText.select();
         document.execCommand("Copy");
-        alert("Image URL copied to your clipboard!");
+        alert("URL copied to your clipboard!");
     });
 
 
@@ -172,13 +172,31 @@ $(function() {
         window.close();
     });
 
+    $(".select-file").on("click", function(event){
+        var id = $(this).data("id");
+        var name = $(this).data("name");
+        parent.addFileToArray(id, name);
+    });
+
+    window.addFileToArray = function(id, name) {
+        if($('#selected-files > input[value='+id+']').length > 0) {
+            alert("File already selected!");
+            return;
+        }
+
+        $('#selected-files').append('<input type="hidden" name="files[]" value="'+id+'" />');
+        $('#files-table > tbody').append('<tr data-id="'+id+'"><td>'+name+'</td><td></td></tr>');
+
+        $('#attached-files').modal("toggle");
+    };
+
 
     // Update featured image
     window.updateFeaturedImage = function(id, url) {
         $('#featured-image-container').empty().append("<img src='"+url+"' />");
         $('#featured_image').val(id);
         $('#featured-image').modal("toggle");
-    }
+    };
 
     $('.existing-tag').on("click", function(event) {
         event.preventDefault();

@@ -10,6 +10,7 @@ class BlogFile extends BlogModel
 
     protected $fillable = [
         'site_id',
+        'storage_location',
         'path'
     ];
 

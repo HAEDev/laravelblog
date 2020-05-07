@@ -67,8 +67,6 @@ class BlogFileController extends Controller
             abort(403);
         }
 
-//        dd($request->file('files'));
-
         // Upload files, create records
         foreach($request->file('files') as $file)
         {
@@ -145,6 +143,7 @@ class BlogFileController extends Controller
         // Create DB record
         BlogFile::create([
             'site_id' => getBlogSiteID(),
+            'storage_location' => $storageLocation,
             'path' => $filename
         ]);
 

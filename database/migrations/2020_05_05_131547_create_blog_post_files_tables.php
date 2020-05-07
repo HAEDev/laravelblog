@@ -16,6 +16,7 @@ class CreateBlogPostFilesTables extends Migration
         Schema::create('blog_files', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('site_id')->nullable();
+            $table->string('storage_location');
             $table->string('path');
             $table->softDeletes();
             $table->timestamps();

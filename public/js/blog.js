@@ -178,6 +178,8 @@ $(function() {
         parent.addFileToArray(id, name);
     });
 
+    setRemoveFileClick()
+
     window.addFileToArray = function(id, name) {
         if($('#selected-files > input[value='+id+']').length > 0) {
             alert("File already selected!");
@@ -185,10 +187,18 @@ $(function() {
         }
 
         $('#files-table > tbody').append('<tr data-id="'+id+'"><td><input type="hidden" name="attached_files[]" value="'+id+'" />'
-            +name+'</td><td></td></tr>');
+            +name+'</td><td><a href="#files-table" class="remove-file">Remove</a></td></tr>');
+
+        setRemoveFileClick();
 
         $('#attached-files').modal("toggle");
     };
+
+    function setRemoveFileClick() {
+        $(".remove-file").off("click").on("click", function(event){
+            $(this).closest("tr").remove();
+        });
+    }
 
 
     // Update featured image

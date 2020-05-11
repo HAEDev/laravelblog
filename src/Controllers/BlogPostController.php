@@ -231,6 +231,12 @@ class BlogPostController extends Controller
             $post->categories()->detach();
         }
 
+        if($request->attached_files) {
+            $post->files()->sync($request->attached_files);
+        } else {
+            $post->files()->detach();
+        }
+
         // Assign tags
         $tags = [];
         if($request->tags) {

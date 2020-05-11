@@ -54,7 +54,9 @@
                                         <input type="hidden" name="attached_files[]" value="{{ $file->id }}" />
                                         {{ $file->path }}
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <a href="#files-table" class="remove-file">Remove</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

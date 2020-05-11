@@ -38,6 +38,7 @@ class BlogPostRequest extends FormRequest
             'comments_enabled'  => 'required|boolean',
             'tags'              => 'sometimes|string|nullable',
             'is_featured'       => 'sometimes|boolean',
+            'attached_files'             => 'sometimes|array|nullable'
         ]);
 
         $siteId = getBlogSiteID();

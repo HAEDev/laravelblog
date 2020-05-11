@@ -116,6 +116,11 @@ class BlogPost extends BlogModel
         return $this->hasMany(BlogPostView::class, "blog_post_id", "id");
     }
 
+    public function files()
+    {
+        return $this->belongsToMany(BlogFile::class, "blog_post_files", "post_id", "file_id");
+    }
+
     /**
      * Returns an array of available statuses a BlogPost can be in.
      *

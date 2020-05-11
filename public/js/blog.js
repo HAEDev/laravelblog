@@ -184,8 +184,8 @@ $(function() {
             return;
         }
 
-        $('#selected-files').append('<input type="hidden" name="files[]" value="'+id+'" />');
-        $('#files-table > tbody').append('<tr data-id="'+id+'"><td>'+name+'</td><td></td></tr>');
+        $('#files-table > tbody').append('<tr data-id="'+id+'"><td><input type="hidden" name="attached_files[]" value="'+id+'" />'
+            +name+'</td><td></td></tr>');
 
         $('#attached-files').modal("toggle");
     };

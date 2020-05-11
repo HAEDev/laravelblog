@@ -48,11 +48,17 @@
                         </tr>
                         </thead>
                         <tbody>
-
+                            @foreach($post->files as $file)
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="attached_files[]" value="{{ $file->id }}" />
+                                        {{ $file->path }}
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
-                </div>
-                <div id="selected-files">
                 </div>
             </div>
         </div>

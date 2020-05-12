@@ -48,6 +48,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @if(isset($post))
                             @foreach($post->files as $file)
                                 <tr>
                                     <td>
@@ -59,6 +60,7 @@
                                     </td>
                                 </tr>
                             @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>

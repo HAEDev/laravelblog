@@ -14,7 +14,7 @@ class CreateBlogPostFilesTables extends Migration
     public function up()
     {
         Schema::create('blog_files', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->unsignedInteger('site_id')->nullable();
             $table->string('storage_location');
             $table->string('path');

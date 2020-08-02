@@ -118,7 +118,7 @@ class BlogPost extends BlogModel
 
     public function files()
     {
-        return $this->belongsToMany(BlogFile::class, "blog_post_files", "post_id", "file_id");
+        return $this->belongsToMany(BlogFile::class, "blog_post_files", "post_id", "file_id")->withPivot('display_name');
     }
 
     /**

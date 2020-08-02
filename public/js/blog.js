@@ -181,13 +181,14 @@ $(function() {
     setRemoveFileClick()
 
     window.addFileToArray = function(id, name) {
-        if($('#selected-files > input[value='+id+']').length > 0) {
+        if($('#files-table').find('input[value='+id+']').length > 0) {
             alert("File already selected!");
             return;
         }
 
-        $('#files-table > tbody').append('<tr data-id="'+id+'"><td><input type="hidden" name="attached_files[]" value="'+id+'" />'
-            +name+'</td><td><a href="#files-table" class="remove-file">Remove</a></td></tr>');
+        $('#files-table > tbody').append('<tr data-id="'+id+'"><td><input type="hidden" name="attached_files['+id+']" value="'+id+'" />'
+            +name+'</td><td><input type="text" class="form-control" name="attached_files['+id+'][display_name]"></td>'
+            +'<td><a href="#files-table" class="remove-file">Remove</a></td></tr>');
 
         setRemoveFileClick();
 

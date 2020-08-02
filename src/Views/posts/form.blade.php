@@ -44,6 +44,7 @@
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Display Name</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -52,8 +53,12 @@
                             @foreach($post->files as $file)
                                 <tr>
                                     <td>
-                                        <input type="hidden" name="attached_files[]" value="{{ $file->id }}" />
+                                        <input type="hidden" name="attached_files[{{ $file->id }}]" value="{{ $file->id }}" />
                                         {{ $file->path }}
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="attached_files[{{ $file->id }}][display_name]"
+                                               value="{{ $file->pivot->display_name }}" />
                                     </td>
                                     <td>
                                         <a href="#files-table" class="remove-file">Remove</a>

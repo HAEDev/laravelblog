@@ -27,11 +27,11 @@ $(function() {
     var pendingImagesContainer = $(".pending-images");
 
     $("#images-upload").on("change", function() {
-        previewFiles();
+        previewImageFiles();
     });
 
     // Allows image files to be previewed
-    function previewFiles() {
+    function previewImageFiles() {
         pendingImagesContainer.empty();
         var files   = document.querySelector('#images-upload').files;
         var count   = 0;
@@ -75,6 +75,46 @@ $(function() {
         }
     }
 
+    var pendingFilesContainer = $(".pending-files");
+
+    $("#files-upload").on("change", function() {
+        previewFiles();
+    });
+
+    function previewFiles() {
+        pendingFilesContainer.empty();
+        var files   = document.querySelector('#files-upload').files;
+        var count   = 0;
+
+        function readAndPreview(file) {
+            console.log(file);
+            if ( /\.(xls?x|doc?x|pdf)$/i.test(file.name) ) {
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var template = "<div class='col-sm-6'>\n" +
+                        "               <div class='pending'>\n" +
+                        "                    <div class='pending-file text-center'>\n" +
+                        "                        "+file.name+"\n" +
+                        "                    </div>\n" +
+                        "                    <div class='text-right'>" +
+                        "                       <button class='btn btn-sm btn-danger remove-image'>Remove</button>" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "               </div>";
+                    pendingFilesContainer.append( template );
+                    count++;
+                }, false);
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+    }
+
     // Used when previewing files to upload
     $(document).on("click", ".remove-image", function(event) {
         event.preventDefault();
@@ -99,7 +139,7 @@ $(function() {
         var copyText = $(this).parent().find("input");
         copyText.select();
         document.execCommand("Copy");
-        alert("Image URL copied to your clipboard!");
+        alert("URL copied to your clipboard!");
     });
 
 
@@ -132,13 +172,42 @@ $(function() {
         window.close();
     });
 
+    $(".select-file").on("click", function(event){
+        var id = $(this).data("id");
+        var name = $(this).data("name");
+        parent.addFileToArray(id, name);
+    });
+
+    setRemoveFileClick()
+
+    window.addFileToArray = function(id, name) {
+        if($('#files-table').find('input[value='+id+']').length > 0) {
+            alert("File already selected!");
+            return;
+        }
+
+        $('#files-table > tbody').append('<tr data-id="'+id+'"><td><input type="hidden" name="attached_files['+id+']" value="'+id+'" />'
+            +name+'</td><td><input type="text" class="form-control" name="attached_files['+id+'][display_name]"></td>'
+            +'<td><a href="#files-table" class="remove-file">Remove</a></td></tr>');
+
+        setRemoveFileClick();
+
+        $('#attached-files').modal("toggle");
+    };
+
+    function setRemoveFileClick() {
+        $(".remove-file").off("click").on("click", function(event){
+            $(this).closest("tr").remove();
+        });
+    }
+
 
     // Update featured image
     window.updateFeaturedImage = function(id, url) {
         $('#featured-image-container').empty().append("<img src='"+url+"' />");
         $('#featured_image').val(id);
         $('#featured-image').modal("toggle");
-    }
+    };
 
     $('.existing-tag').on("click", function(event) {
         event.preventDefault();

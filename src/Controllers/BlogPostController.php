@@ -125,6 +125,10 @@ class BlogPostController extends Controller
             $post->syncTags($tags);
         }
 
+        if($request->attached_files) {
+            $post->files()->sync($request->attached_files);
+        }
+
         // Dispatch the created event
         event(new BlogPostCreated($post));
 
@@ -225,6 +229,12 @@ class BlogPostController extends Controller
         } else {
             // No categories selected
             $post->categories()->detach();
+        }
+
+        if($request->attached_files) {
+            $post->files()->sync($request->attached_files);
+        } else {
+            $post->files()->detach();
         }
 
         // Assign tags

@@ -314,6 +314,59 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | File Admin Options
+    |--------------------------------------------------------------------------
+    |
+    | All config options related to the blog files.
+    |
+    */
+
+    'files' => [
+
+        /*
+         * Defines whether or not the feature is enabled on the site or not
+         */
+        'enabled'           => true,
+
+        /*
+         * The taxonomy will be used in the routes file to define the route
+         */
+        'taxonomy'          => 'files',
+
+        /*
+         * How many records should be shown on the index page
+         */
+        'per_page'          => 15,
+
+        /*
+         * Storage location. Options are 'public' or 'storage'
+         */
+        'storage_location'  => 'storage',
+
+        /*
+         * Where Blog Images will be stored. Relative to the public directory if the storage_location
+         * is set to 'public' or the storage/app/public directory if set to 'storage'
+         */
+        'storage_path'      => "files/laravel-blog",
+
+        /*
+         * The uploaded file will be stored according to this template, followed
+         * by it's original extension.
+         *
+         * Available tags: [date] [datetime] [filename]
+         *                  Ymd    Ymd-His
+         */
+        'filename_format'   => '[datetime]_[filename]',
+
+        /*
+         * Maximum size for any individual uploaded file (defined in Kb)
+         */
+        'max_upload_size'   => 10000
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Comment Admin Options
     |--------------------------------------------------------------------------
     |

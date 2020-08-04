@@ -33,6 +33,21 @@
                     {!! $post->content !!}
                 </div>
 
+                @if(count($post->files))
+                <div class="files">
+                    <h6>Attached Files</h6>
+                    <table class="table-striped">
+                        <tbody>
+                            @foreach($post->files as $file)
+                            <tr>
+                                <td><a href="{{ $file->getUrl() }}" target="_blank">{{ $file->path }}</a></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+
             </article>
 
             @if(config("laravel-blog.comments.enabled"))

@@ -148,7 +148,7 @@ class BlogHelper
             ? date("Y-m-d H:i:s", time() + 3600)
             : date("Y-m-d H:i:s");
 
-        return BlogTag::whereHas("posts", function($query) {
+        return BlogTag::whereHas("posts", function($query) use ($currentDate) {
             $query->where("status", BlogPost::STATUS_ACTIVE)
                 ->where('site_id', getBlogSiteID())
                 ->where('published_at', '<', $currentDate);

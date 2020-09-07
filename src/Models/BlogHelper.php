@@ -13,7 +13,7 @@ class BlogHelper
      *
      * @return bool
      */
-    public function hasPosts()
+    public static function hasPosts()
     {
         return self::getPublishedPosts()->exists();
     }

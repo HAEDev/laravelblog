@@ -73,7 +73,7 @@ class BlogTagController extends Controller
             } else {
                 DB::rollback();
 
-                return redirect($this->routePrefix."tags")
+                return redirect($this->routePrefix."tags")->withInput()
                     ->with('error', "$name already exists as a tag");
             }
 

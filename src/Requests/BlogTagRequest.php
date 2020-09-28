@@ -25,13 +25,16 @@ class BlogTagRequest extends FormRequest
     {
         $rules = [];
 
+        $siteId = getBlogSiteID();
+
         switch ($this->method())
         {
             case 'POST':
                 $rules['tags'] = 'required|string';
                 break;
             case 'PATCH':
-                $rules['tag'] = 'required|string';
+                $id = $this->tag_id;
+                $rules['tag'] = "required|string|unique:blog_tags,name,$id,id,site_id,$siteId";
                 break;
         }
 

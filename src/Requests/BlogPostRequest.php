@@ -7,6 +7,11 @@ use Lnch\LaravelBlog\Models\BlogPost;
 
 class BlogPostRequest extends FormRequest
 {
+    public function messages()
+    {
+        return ['tags.*.max' => 'Tags may not be greater than 190 characters'];
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *

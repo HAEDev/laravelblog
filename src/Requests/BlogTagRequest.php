@@ -8,7 +8,8 @@ class BlogTagRequest extends FormRequest
 {
     public function messages()
     {
-        return ['tags.*.unique' => 'Tags must be unique'];
+        return ['tags.*.unique' => 'Tags must be unique',
+            'tags.*.max' => 'Tags may not be greater than 190 characters'];
     }
 
     /**

@@ -121,8 +121,7 @@ class BlogPostController extends Controller
 
         // Assign tags
         if($request->tags) {
-            $tags = explode(",", $request->tags);
-            $post->syncTags($tags);
+            $post->syncTags($request->tags);
         }
 
         if($request->attached_files) {
@@ -240,7 +239,7 @@ class BlogPostController extends Controller
         // Assign tags
         $tags = [];
         if($request->tags) {
-            $tags = array_merge($tags, explode(",", $request->tags));
+            $tags = array_merge($tags, $request->tags);
         }
         if($request->tag && count($request->tag)) {
             $tags = array_merge($tags, $request->tag);

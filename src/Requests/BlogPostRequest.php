@@ -17,6 +17,11 @@ class BlogPostRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge(['tags' => explode(',', $this->tags)]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -36,7 +41,8 @@ class BlogPostRequest extends FormRequest
             'format'            => 'sometimes',
             'published_at'      => 'nullable|date',
             'comments_enabled'  => 'required|boolean',
-            'tags'              => 'sometimes|string|nullable',
+            'tags'              => 'sometimes|array|nullable',
+            'tags.*'            => 'string|max:190',
             'is_featured'       => 'sometimes|boolean',
             'attached_files'    => 'sometimes|array|nullable'
         ]);

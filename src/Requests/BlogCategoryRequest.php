@@ -32,10 +32,10 @@ class BlogCategoryRequest extends FormRequest
         switch ($this->method())
         {
             case 'POST':
-                $rules['name'] = 'required|unique:blog_categories,name,NULL,id,site_id,'.$siteId.',deleted_at,NULL|string';
+                $rules['name'] = 'required|unique:blog_categories,name,NULL,id,site_id,'.$siteId.',deleted_at,NULL|string|max:190';
                 break;
             case 'PATCH':
-                $rules['name'] = 'required|unique:blog_categories,name,'.$this->category_id.',id,site_id,'.$siteId.'|string';
+                $rules['name'] = 'required|unique:blog_categories,name,'.$this->category_id.',id,site_id,'.$siteId.'|string|max:190';
                 break;
         }
 

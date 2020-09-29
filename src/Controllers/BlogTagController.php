@@ -51,40 +51,10 @@ class BlogTagController extends Controller
             abort(403);
         }
 
-
-        DB::beginTransaction();
-
-        $newTags = explode(",", $request->tags);
-
-        foreach($newTags as $tag)
-        {
-            // Capitalise the words
-            $name = ucwords(strtolower(trim($tag)));
-            $tag = BlogTag::where("name", $name)->first();
-
-            $siteId = getBlogSiteID();
-
-            // If the tag doesn't exist, create it
-            if(!$tag) {
-                $tag = BlogTag::create([
-                    'site_id' => $siteId,
-                    'name' => $name
-                ]);
-            } else {
-                DB::rollback();
-
-                return redirect($this->routePrefix."tags")->withInput()
-                    ->with('error', "$name already exists as a tag");
-            }
-
-            // Add to list
-            $ids[] = $tag->id;
-        }
-
-        DB::commit();
+        BlogTag::createMany($request->tags);
 
         return redirect($this->routePrefix."tags")
-            ->with("success", (count($newTags) == 1 ? "Tag" : "Tags") . " created successfully. If a tag existed previously, it has not been duplicated.");
+            ->with("success", (count($request->tags) == 1 ? "Tag" : "Tags") . " created successfully");
     }
 
     /**

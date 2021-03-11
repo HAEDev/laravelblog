@@ -12,6 +12,11 @@ return [
     */
 
     'post_model' => Lnch\LaravelBlog\Models\BlogPost::class,
+    'image_model' => \Lnch\LaravelBlog\Models\BlogImage::class,
+    'category_model' => \Lnch\LaravelBlog\Models\BlogCategory::class,
+    'file_model' => \Lnch\LaravelBlog\Models\BlogFile::class,
+    'tag_model' => \Lnch\LaravelBlog\Models\BlogTag::class,
+    'comment_model' => \Lnch\LaravelBlog\Models\Comment::class,
 
     /*
     |--------------------------------------------------------------------------

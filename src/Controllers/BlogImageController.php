@@ -34,7 +34,7 @@ class BlogImageController extends Controller
             abort(403);
         }
 
-        $images = BlogImage::paginate(config("laravel-blog.images.per_page"));
+        $images = $this->imageModel->paginate(config("laravel-blog.images.per_page"));
 
         return view($this->viewPath."images.index", [
             'images' => $images
@@ -95,7 +95,7 @@ class BlogImageController extends Controller
      * @param BlogImage $image
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(BlogImage $image)
+    public function edit($image)
     {
         if(auth()->user()->cannot("edit", $image)) {
             abort(403);
@@ -113,7 +113,7 @@ class BlogImageController extends Controller
      * @param BlogImage        $image
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(BlogImageRequest $request, BlogImage $image)
+    public function update(BlogImageRequest $request, $image)
     {
         if(auth()->user()->cannot("edit", $image)) {
             abort(403);
@@ -137,7 +137,7 @@ class BlogImageController extends Controller
      * @throws \Exception
      * @internal param int $id
      */
-    public function destroy(BlogImage $image)
+    public function destroy($image)
     {
         if(auth()->user()->cannot("delete", $image)) {
             abort(403);
@@ -184,7 +184,7 @@ class BlogImageController extends Controller
         $storageLocation = config("laravel-blog.images.storage_location");
 
         // Create DB record
-        BlogImage::create([
+        $this->imageModel->create([
             'site_id' => getBlogSiteID(),
             'storage_location' => $storageLocation,
             'path' => $filename,

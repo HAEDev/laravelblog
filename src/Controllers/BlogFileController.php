@@ -34,7 +34,7 @@ class BlogFileController extends Controller
             abort(403);
         }
 
-        $files = BlogFile::paginate(config("laravel-blog.files.per_page"));
+        $files = $this->fileModel->paginate(config("laravel-blog.files.per_page"));
 
         return view($this->viewPath."files.index", [
             'files' => $files
@@ -141,7 +141,7 @@ class BlogFileController extends Controller
         $storageLocation = config("laravel-blog.files.storage_location");
 
         // Create DB record
-        BlogFile::create([
+        $this->fileModel->create([
             'site_id' => getBlogSiteID(),
             'storage_location' => $storageLocation,
             'path' => $filename

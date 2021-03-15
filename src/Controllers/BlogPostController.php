@@ -120,7 +120,7 @@ class BlogPostController extends Controller
         }
 
         // Assign tags
-        if($request->tags) {
+        if($request->tags && config("laravel-blog.tags.enabled")) {
             $post->syncTags($request->tags);
         }
 

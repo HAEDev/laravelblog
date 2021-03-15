@@ -78,7 +78,7 @@ class BlogPost extends BlogModel
      */
     public function featuredImage()
     {
-        return $this->belongsTo(BlogImage::class, "blog_image_id");
+        return $this->belongsTo(config('laravel-blog.image_model'), "blog_image_id");
     }
 
     /**
@@ -118,7 +118,7 @@ class BlogPost extends BlogModel
 
     public function files()
     {
-        return $this->belongsToMany(BlogFile::class, "blog_post_files", "post_id", "file_id")->withPivot('display_name');
+        return $this->belongsToMany(config('laravel-blog.file_model'), "blog_post_files", "post_id", "file_id")->withPivot('display_name');
     }
 
     /**

@@ -21,7 +21,7 @@ class BlogCategory extends BlogModel
      */
     public function posts()
     {
-        return $this->belongsToMany(BlogPost::class, "blog_post_categories",
+        return $this->belongsToMany(config("laravel-blog.post_model"), "blog_post_categories",
             "blog_category_id", "blog_post_id");
     }
 

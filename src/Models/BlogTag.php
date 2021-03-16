@@ -20,7 +20,7 @@ class BlogTag extends BlogModel
      */
     public function posts()
     {
-        return $this->belongsToMany(BlogPost::class, "blog_post_tags",
+        return $this->belongsToMany(config("laravel-blog.post_model"), "blog_post_tags",
             "blog_tag_id", "blog_post_id");
     }
 

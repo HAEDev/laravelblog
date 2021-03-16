@@ -46,7 +46,7 @@ class BlogPost extends BlogModel
      */
     public function categories()
     {
-        return $this->belongsToMany(BlogCategory::class, "blog_post_categories",
+        return $this->belongsToMany(config("laravel-blog.category_model"), "blog_post_categories",
             "blog_post_id", "blog_category_id");
     }
 
@@ -57,7 +57,7 @@ class BlogPost extends BlogModel
      */
     public function tags()
     {
-        return $this->belongsToMany(BlogTag::class, "blog_post_tags",
+        return $this->belongsToMany(config("laravel-blog.tag_model"), "blog_post_tags",
             "blog_post_id", "blog_tag_id");
     }
 
@@ -89,7 +89,7 @@ class BlogPost extends BlogModel
     public function allComments()
     {
         return config("laravel-blog.comments.enabled")
-            ? $this->hasMany(Comment::class, "post_id", "id")
+            ? $this->hasMany(config("laravel-blog.comment_model"), "post_id", "id")
                 ->orderby("created_at", "desc")
             : [];
     }
@@ -143,7 +143,7 @@ class BlogPost extends BlogModel
     public function syncTags($tags)
     {
         // Create tags if needs be
-        $ids = BlogTag::createMany($tags);
+        $ids = config("laravel-blog.tag_model")::createMany($tags);
 
         // Sync relations
         $this->tags()->sync($ids);
@@ -158,7 +158,7 @@ class BlogPost extends BlogModel
      */
     public function availableCategories()
     {
-        return BlogCategory::whereNotIn(
+        return config("laravel-blog.category-model")::whereNotIn(
             "blog_categories.id",
             $this->categories()->pluck("blog_categories.id")->toArray()
         )->get();

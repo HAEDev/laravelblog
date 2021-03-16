@@ -47,7 +47,7 @@ class Comment extends Model
 
     public function post()
     {
-        return $this->belongsTo(BlogPost::class, "post_id");
+        return $this->belongsTo(config("laravel-blog.post_model"), "post_id");
     }
 
     public function user()

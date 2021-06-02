@@ -89,7 +89,7 @@ class BlogPost extends BlogModel
     public function allComments()
     {
         return config("laravel-blog.comments.enabled")
-            ? $this->hasMany(config("laravel-blog.comment_model"), "post_id", "id")
+            ? $this->hasMany(config("laravel-blog.comment_model"), "blog_post_id", "id")
                 ->orderby("created_at", "desc")
             : [];
     }

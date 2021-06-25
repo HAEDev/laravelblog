@@ -30,6 +30,7 @@ class BlogPost extends BlogModel
         'comments_enabled',
         'published_at',
         'is_featured',
+        'show_featured'
     ];
 
     public $dates = [

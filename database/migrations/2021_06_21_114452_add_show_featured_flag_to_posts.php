@@ -14,7 +14,7 @@ class AddShowFeaturedFlagToPosts extends Migration
     public function up()
     {
         Schema::table('blog_posts', function (Blueprint $table) {
-            $table->boolean('show_featured')->default(1);
+            $table->boolean('show_featured')->default(1)->after('blog_image_id');
         });
     }
 

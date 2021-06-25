@@ -49,7 +49,8 @@ class BlogPostRequest extends FormRequest
             'tags'              => 'sometimes|array|nullable',
             'tags.*'            => 'string|max:190',
             'is_featured'       => 'sometimes|boolean',
-            'attached_files'    => 'sometimes|array|nullable'
+            'attached_files'    => 'sometimes|array|nullable',
+            'show_featured'     => 'sometimes|boolean'
         ]);
 
         $siteId = getBlogSiteID();

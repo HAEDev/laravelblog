@@ -140,6 +140,10 @@
                     <button type="button" class="btn btn-sm btn-block btn-primary" data-toggle="modal"
                             data-target="#featured-image">Choose Image</button>
                 </div> <!-- End .content -->
+                <label for="post_status" for="show_featured" class="control-label">
+                    <input type="checkbox" name="show_featured" id="show_featured"
+                           value="1" @if(isset($post) && $post->show_featured) checked @endif /> Show Featured Image In Post
+                </label>
             </div> <!-- End .laravel-blog-sidebar-block -->
         @endif
 

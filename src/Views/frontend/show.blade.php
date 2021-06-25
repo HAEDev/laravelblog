@@ -8,7 +8,7 @@
             <article class="single-post">
 
                 <figure class="post-image">
-                    @if($post->featuredImage)
+                    @if($post->featuredImage && $post->show_featured)
                         <img src="{{ $post->featuredImage->getUrl() }}" alt="{{ $post->featuredImage->alt_text }}" />
                     @endif
                 </figure> <!-- End .post-image -->

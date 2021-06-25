@@ -111,7 +111,8 @@ class BlogPostController extends Controller
             'is_approved' => 1,
             'comments_enabled' => boolval($request->comments_enabled),
             'published_at' => $published_at,
-            'is_featured' => boolval($request->get("is_featured", 0))
+            'is_featured' => boolval($request->get("is_featured", 0)),
+            'show_featured' => boolval($request->get("show_featured", 0))
         ]);
 
         // Update category
@@ -219,7 +220,8 @@ class BlogPostController extends Controller
             'comments_enabled' => boolval($request->comments_enabled),
             'published_at' => $published_at,
             'blog_image_id' => $request->blog_image_id,
-            'is_featured' => boolval($request->is_featured)
+            'is_featured' => boolval($request->is_featured),
+            'show_featured' => boolval($request->show_featured)
         ]);
 
         // Update category

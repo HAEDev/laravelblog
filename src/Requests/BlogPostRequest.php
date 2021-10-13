@@ -24,7 +24,9 @@ class BlogPostRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $this->merge(['tags' => explode(',', $this->tags)]);
+        if(!is_null($this->tags)) {
+            $this->merge(['tags' => explode(',', $this->tags)]);
+        }
     }
 
     /**

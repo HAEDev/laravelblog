@@ -33,6 +33,7 @@ class Comment extends Model
         'name',
         'email',
         'body',
+        'image_path',
         'status',
         'moderated_by',
         'moderated_at',

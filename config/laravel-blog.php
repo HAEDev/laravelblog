@@ -407,6 +407,11 @@ return [
          */
         'allow_guests' => true,
 
+        /*
+         * Defines whether comments can have images added to them.
+         */
+        'allow_images' => false,
+
     ],
 
 ];

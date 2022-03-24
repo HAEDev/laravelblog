@@ -3,6 +3,7 @@
 namespace Lnch\LaravelBlog\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Lnch\LaravelBlog\Models\BlogHelper;
 use Lnch\LaravelBlog\Models\BlogPost;
 use Lnch\LaravelBlog\Models\Comment;
@@ -69,12 +70,26 @@ class BlogController extends Controller
     {
         $post = $this->postModel->findOrFail($post);
 
-        $this->validate($request, [
+        $rules = [
             'name' => 'sometimes|string|max:200',
             'email' => 'sometimes|email|max:150',
             'comment' => 'required|string|max:65000',
             'parent_id' => 'sometimes',
-        ]);
+        ];
+
+        if(config('laravel-blog.comments.allow_images') === true) {
+            $rules['image'] = 'nullable|image';
+        }
+
+        $this->validate($request, $rules);
+
+        $imagePath = null;
+
+        if($request->image) {
+            $imageFileName = $this->uploadFile($request->image);
+
+            $imagePath = config('laravel-blog.images.storage_path') . "/" . $imageFileName;
+        }
 
         $post->comments()->create([
             'name' => $request->name,
@@ -82,10 +97,52 @@ class BlogController extends Controller
             'parent_id' => $request->parent_id,
             'user_id' => auth()->id(),
             'body' => $request->comment,
+            'image_path' => $imagePath,
             'status' => config("laravel-blog.comments.requires_approval")
                 ? Comment::STATUS_PENDING_APPROVAL : Comment::STATUS_APPROVED,
         ]);
 
         return redirect(blogUrl("$post->id/$post->slug" . "#post-comments", true));
+    }
+
+    private function uploadFile(UploadedFile $file)
+    {
+        // Create filename
+        $originalFilename = $file->getClientOriginalName();
+
+        $patterns = [
+            '@\[date\]@is',
+            '@\[datetime\]@is',
+            '@\[filename\]@is',
+        ];
+
+        $matches = [
+            date("Ymd"),
+            date("Ymd-His"),
+            str_replace(" ", "_", $originalFilename),
+        ];
+
+        $filenamePattern = config("laravel-blog.images.filename_format", "[datetime]_[filename]");
+        $filename = preg_replace($patterns, $matches, $filenamePattern);
+
+        $storageLocation = config("laravel-blog.images.storage_location");
+
+        // Upload file
+        if ($storageLocation == "public")
+        {
+            $destinationPath = public_path(config("laravel-blog.images.storage_path"));
+        }
+        else if($storageLocation == "storage")
+        {
+            $destinationPath = storage_path("app/public/".config("laravel-blog.images.storage_path"));
+        }
+        else
+        {
+            throw new \Exception("images.storage_path has not been properly defined");
+        }
+
+        $file->move($destinationPath, $filename);
+
+        return $filename;
     }
 }

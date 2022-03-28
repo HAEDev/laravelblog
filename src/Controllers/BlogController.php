@@ -105,6 +105,30 @@ class BlogController extends Controller
         return redirect(blogUrl("$post->id/$post->slug" . "#post-comments", true));
     }
 
+    public function deleteComment($comment)
+    {
+        $comment = $this->commentModel->findOrFail($comment);
+
+        if ($comment->replies) {
+            foreach ($comment->replies as $reply) {
+                $reply->delete();
+            }
+        }
+
+        $comment->delete();
+
+        return redirect()->back();
+    }
+
+    public function removeCommentImage($comment)
+    {
+        $comment = $this->commentModel->findOrFail($comment);
+
+        $comment->update(['image_path' => null]);
+
+        return redirect()->back();
+    }
+
     private function uploadFile(UploadedFile $file)
     {
         // Create filename

@@ -5,6 +5,8 @@ Route::group(['prefix' => config("laravel-blog.frontend_route_prefix"), 'middlew
     Route::get("/", "Lnch\LaravelBlog\Controllers\BlogController@index");
     Route::get("/{post}/{slug?}", "Lnch\LaravelBlog\Controllers\BlogController@show")->where('post', '[0-9]+');
     Route::post("/{post}/comments", "Lnch\LaravelBlog\Controllers\BlogController@postComment");
+    Route::post("/{comment}/delete", "Lnch\LaravelBlog\Controllers\BlogController@deleteComment");
+    Route::post("/{comment}/remove-image", "Lnch\LaravelBlog\Controllers\BlogController@removeCommentImage");
 
 });
 

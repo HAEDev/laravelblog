@@ -117,6 +117,10 @@ class BlogController extends Controller
             }
         }
 
+        if ($comment->image_path) {
+            Storage::disk('public')->delete($comment->image_path);
+        }
+
         $comment->delete();
 
         return redirect()->back();
@@ -127,6 +131,8 @@ class BlogController extends Controller
         $comment = $this->commentModel->findOrFail($comment);
 
         $this->authorize('update', $comment);
+
+        Storage::disk('public')->delete($comment->image_path);
 
         $comment->update(['image_path' => null]);
 

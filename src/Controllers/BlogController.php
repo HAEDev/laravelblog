@@ -109,6 +109,8 @@ class BlogController extends Controller
     {
         $comment = $this->commentModel->findOrFail($comment);
 
+        $this->authorize('delete', $comment);
+
         if ($comment->replies) {
             foreach ($comment->replies as $reply) {
                 $reply->delete();
@@ -123,6 +125,8 @@ class BlogController extends Controller
     public function removeCommentImage($comment)
     {
         $comment = $this->commentModel->findOrFail($comment);
+
+        $this->authorize('update', $comment);
 
         $comment->update(['image_path' => null]);
 

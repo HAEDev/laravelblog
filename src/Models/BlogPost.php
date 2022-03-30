@@ -312,10 +312,22 @@ class BlogPost extends BlogModel
     public function recordView()
     {
         if (auth()->check()) {
-            $this->views()->updateOrCreate([
-                'blog_post_id' => $this->id,
-                'user_id' => auth()->id(),
-            ]);
+
+            if ($this->views()
+                ->where('blog_post_id', '=', $this->id)
+                ->where('user_id', '=', auth()->id())
+                ->exists()) {
+
+                $this->views()->where('blog_post_id', '=', $this->id)
+                    ->where('user_id', '=', auth()->id())->touch();
+
+            } else {
+
+                $this->views()->create([
+                    'blog_post_id' => $this->id,
+                    'user_id' => auth()->id(),
+                ]);
+            }
         }
 
         return true;

@@ -4,6 +4,7 @@ namespace Lnch\LaravelBlog\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Lnch\LaravelBlog\Models\BlogHelper;
 use Lnch\LaravelBlog\Models\BlogPost;
 use Lnch\LaravelBlog\Models\Comment;

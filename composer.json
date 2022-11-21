@@ -1,5 +1,5 @@
 {
-    "name": "lnch/laravel-blog",
+    "name": "lnch/laravelblog",
     "description": "A complete Blog module, with category, tag, and images",
     "authors": [
         {
@@ -10,7 +10,7 @@
     "licence": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "*"
     },
     "autoload": {
         "psr-4": {
